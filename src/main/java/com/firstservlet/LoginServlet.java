@@ -19,13 +19,14 @@ import java.io.PrintWriter;
         }
 )
 public class LoginServlet extends HttpServlet {
+    LoginValidator validator = new LoginValidator();
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, IOException {
         String user = request.getParameter("user");
         String pwd = request.getParameter("pwd");
-        String userId = getServletConfig().getInitParameter("user");
         String password = getServletConfig().getInitParameter("password");
-        if (userId.equals(user) && password.equals(pwd)) {
+        if (validator.userNameValidation(user) && password.equals(pwd)) {
             request.setAttribute("user", user);
             request.getRequestDispatcher("LoginSuccess.jsp").forward(request, response);
         } else {
@@ -35,4 +36,4 @@ public class LoginServlet extends HttpServlet {
             requestDispatcher.include(request, response);
         }
     }
-    }
+}
