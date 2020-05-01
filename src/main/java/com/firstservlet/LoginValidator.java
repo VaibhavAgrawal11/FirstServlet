@@ -4,11 +4,20 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LoginValidator {
-    String userNamePattern = "^[A-Z][a-z]{2,}$";
+    private String userNamePattern = "^[A-Z][a-z]{2,}$";
+    private String passwordPattern = "^(?=.{8})(?=.*[A-Z])(?=.*[0-9])[\\w]*[^\\w][\\w]*$";
+
+    private boolean validator(String entry, String pattern) {
+        Pattern patternReader = Pattern.compile(pattern);
+        Matcher matcher = patternReader.matcher(entry);
+        return matcher.matches();
+    }
 
     public boolean userNameValidation(String username) {
-        Pattern pattern = Pattern.compile(userNamePattern);
-        Matcher matcher = pattern.matcher(username);
-        return matcher.matches();
+        return validator(username, userNamePattern);
+    }
+
+    public boolean passwordValidation(String password) {
+        return validator(password, passwordPattern);
     }
 }

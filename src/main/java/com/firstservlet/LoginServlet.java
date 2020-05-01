@@ -22,11 +22,10 @@ public class LoginServlet extends HttpServlet {
     LoginValidator validator = new LoginValidator();
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String user = request.getParameter("user");
         String pwd = request.getParameter("pwd");
-        String password = getServletConfig().getInitParameter("password");
-        if (validator.userNameValidation(user) && password.equals(pwd)) {
+        if (validator.userNameValidation(user) && validator.passwordValidation(pwd)) {
             request.setAttribute("user", user);
             request.getRequestDispatcher("LoginSuccess.jsp").forward(request, response);
         } else {
